@@ -79,10 +79,7 @@ services:
     ports:
       - "5418:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
+      - ./pgdata:/var/lib/postgresql/data
 ```
 
 ### 4. Launch the System
