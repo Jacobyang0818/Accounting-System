@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-900: #1e3a8a;
+}
+
+body {
+  margin: 0;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark body {
+  background-color: #0f172a; /* slate-900 */
+  color: #f1f5f9; /* slate-100 */
+}
+
+.dark .my-react-select__control {
+  background-color: #334155; /* slate-700 */
+  border-color: #475569; /* slate-600 */
+}
+
+.dark .my-react-select__single-value,
+.dark .my-react-select__input-container {
+  color: #f1f5f9; /* slate-100 */
+}
+
+.dark .my-react-select__menu {
+  background-color: #1e293b; /* slate-800 */
+  border: 1px solid #334155;
+}
+
+.dark .my-react-select__option {
+  background-color: transparent;
+  color: #f1f5f9;
+}
+
+.dark .my-react-select__option--is-focused {
+  background-color: #334155;
+}
+
+.dark .my-react-select__option--is-selected {
+  background-color: #3b82f6; /* blue-500 */
+}
+
+.dark .my-react-select__multi-value {
+  background-color: #475569;
+}
+
+.dark .my-react-select__multi-value__label {
+  color: #f1f5f9;
+}
