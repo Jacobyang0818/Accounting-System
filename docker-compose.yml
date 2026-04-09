@@ -10,13 +10,13 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: ledger_db
       TZ: Asia/Taipei
-    ports:
-      - "5418:5432"
+    # ports:
+    #   - "5418:5432"
     volumes:
       - ./pgdata:/var/lib/postgresql/data
 
   backend:
-    build: 
+    build:
       context: ./backend
     container_name: ledger_backend
     restart: always
@@ -24,8 +24,8 @@ services:
       - ./backend/.env
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/ledger_db
-    ports:
-      - "8018:8000"
+    # ports:
+    #   - "8018:8000"
     depends_on:
       - db
 
