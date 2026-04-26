@@ -118,8 +118,12 @@ def reset_password(req: schemas.ResetPasswordRequest, db: Session = Depends(get_
                 server.send_message(msg)
         except Exception as e:
             print(f"Failed to send email: {e}")
+            print("====== PASSWORD RESET (EMAIL FAILED) ======")
+            print(f"Email: {user.email}")
+            print(f"New Password: {new_password}")
+            print("===========================================")
             # we won't fail the request since password was reset, but log error
-            return {"ok": True, "message": "密碼已重設，但信件發送失敗。請檢查伺服器紀錄。"}
+            return {"ok": True, "message": "密碼已重設，但信件發送失敗。臨時密碼已列印在後端終端機。請檢查伺服器紀錄。"}
     else:
         # Fallback to printing in console if SMTP is not configured
         print("====== PASSWORD RESET ======")

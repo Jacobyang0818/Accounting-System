@@ -62,11 +62,28 @@ export default function QuickEntry() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      await api.post('/ledgers', data);
+      const payload = {
+        ...data,
+        expense_amt: data.expense_amt ? Number(data.expense_amt) : 0,
+        income_amt: data.income_amt ? Number(data.income_amt) : 0,
+        payment_status: data.payment_status ? Number(data.payment_status) : null,
+      };
+      await api.post('/ledgers', payload);
       flash('✅ 總帳記錄已新增！');
       reset({ date: new Date().toISOString().split('T')[0], expense_amt: 0, income_amt: 0 });
     } catch (e: any) {
-      flash('❌ ' + (e.response?.data?.detail || '儲存失敗'), true);
+      let errMsg = '儲存失敗';
+      if (e.response?.data?.detail) {
+        const detail = e.response.data.detail;
+        if (typeof detail === 'string') {
+          errMsg = detail;
+        } else if (Array.isArray(detail)) {
+          errMsg = detail.map((err: any) => err.msg || JSON.stringify(err)).join(', ');
+        } else {
+          errMsg = JSON.stringify(detail);
+        }
+      }
+      flash('❌ ' + errMsg, true);
     }
   };
 
@@ -137,7 +154,7 @@ export default function QuickEntry() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className={label}>已請款未收付</label>
-            <input type="text" {...register('payment_status')} className={field} />
+            <input type="number" step="0.01" {...register('payment_status')} className={field} />
           </div>
           <div>
             <label className={label}>憑證</label>
